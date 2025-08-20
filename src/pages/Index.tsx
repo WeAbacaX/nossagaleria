@@ -36,7 +36,7 @@ const Login = () => {
       navigate("/galeria");
     } else {
       toast({
-        title: "Usuário ou senha inválidos",
+        title: "Usuário ou senha inválidos!",
         variant: "destructive",
       });
     }

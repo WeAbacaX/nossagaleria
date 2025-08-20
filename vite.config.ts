@@ -20,5 +20,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: "/nossagaleria/",
+  base: '/nossagaleria/', // Certifique-se de que o base esteja correto
+  build: {
+    outDir: 'docs', // Alterando a saída para a pasta docs
+  },
+  // outras configurações...
 }));

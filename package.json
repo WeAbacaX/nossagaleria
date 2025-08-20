@@ -12,7 +12,7 @@
     "deploy": "gh-pages -d dist"
   },
 
-"homepage": "https://weabacax.github.io/nossagaleria",
+  "homepage": "https://weabacax.github.io/nossagaleria",
 
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

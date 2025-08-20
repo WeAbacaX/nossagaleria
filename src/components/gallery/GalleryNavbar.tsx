@@ -43,7 +43,7 @@ export const GalleryNavbar = ({ categories, onCategoryClick }: GalleryNavbarProp
       {/* Mobile Navbar */}
       <nav className="md:hidden fixed top-0 left-0 right-0 z-40 bg-gallery-nav/95 backdrop-blur-sm border-b border-border">
         <div className="flex items-center justify-between px-4 py-4">
-          <img src="public/LogoAL.png" alt="logo" className="h-11 w-auto" />
+          <img src="https://github.com/WeAbacaX/IMaGine/blob/main/1-ComoTudoComecou/LogoAL.png?raw=true" alt="logo" className="h-11 w-auto" />
 
           <Button
             variant="ghost"

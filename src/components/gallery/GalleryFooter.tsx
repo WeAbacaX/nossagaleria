@@ -16,7 +16,7 @@ export const GalleryFooter = () => {
           <p>De: Ale</p>
           <p>Para: Luh</p>
         </div>
-        <img src="public/LogoAL.png" alt="logo" className="h-11 w-auto" />
+        <img src="https://github.com/WeAbacaX/IMaGine/blob/main/1-ComoTudoComecou/LogoAL.png?raw=true" alt="logo" className="h-11 w-auto" />
       </div>
     </div>
   );

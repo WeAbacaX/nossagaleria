@@ -45,8 +45,8 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gallery-bg flex items-center justify-center p-4">
       <Card className="w-full max-w-md p-8 bg-gallery-card border-border shadow-elegant">
-        <img src="https://github.com/WeAbacaX/IMaGine/blob/main/1-ComoTudoComecou/LogoAL.png?raw=true" alt="logo" className="h-30 w-auto" />
-
+        <img src="https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/0-Logo/LogoAL.png?raw=true" alt="logo" className="h-30 w-auto" />
+        
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-foreground">NOSSA GA+LERIA</h1>
         </div>

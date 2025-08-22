@@ -95,7 +95,7 @@ export const ImageModal = ({ isOpen, onClose, images, initialImageIndex }: Image
 
           {/* Image Info */}
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-overlay p-6 text-center">
-            {/* <h3 className="text-white font-medium mb-2">Nossa Galeria</h3> */}
+            <h3 className="text-white font-medium mb-2">{images[currentIndex]?.date}</h3>
             <p className="text-white/70 text-sm">
               {currentIndex + 1} de {images.length} • {images[currentIndex]?.category}
             </p>

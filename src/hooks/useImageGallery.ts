@@ -1,318 +1,182 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { apiFetch } from "../services/ApiService";
 
 export interface GalleryImage {
   id: string;
-  url: string;
-  date: string;
+  publicId: string;
+  title: string;
   category: string;
 }
 
-// Hook para gerenciar o estado da galeria e carregamento de imagens
 export const useImageGallery = () => {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Simulação de carregamento de dados - substitua pela sua API
   useEffect(() => {
     const fetchImages = async () => {
       try {
         setLoading(true);
-        
-        // Simular delay de API
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Mock data - substitua por sua implementação real
-        const mockData: GalleryImage[] = [
-          // { id: "", url: "", date: "null", category: "" },
-          { id: "281", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/20-ArraiaDaAline/moment4.jpeg?raw=true", date: "21/08/2025", category: "Arraia da Aline" },
-          { id: "280", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/20-ArraiaDaAline/moment3.jpeg?raw=true", date: "null", category: "Arraia da Aline" },
-          { id: "279", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/20-ArraiaDaAline/moment2.jpeg?raw=true", date: "null", category: "Arraia da Aline" },
-          { id: "278", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/20-ArraiaDaAline/moment1.jpeg?raw=true", date: "null", category: "Arraia da Aline" },
-          { id: "277", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment9.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "276", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment14.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "275", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment13.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "274", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment12.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "273", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment11.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "272", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment10.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "271", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment15.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "270", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment8.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "269", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment7.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "268", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment6.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "267", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment5.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "266", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment4.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "265", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment3.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "264", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment2.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "263", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/19-RoleNoMotoClube/moment1.jpeg?raw=true", date: "null", category: "Role no Moto Clube" },
-          { id: "262", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment9.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "261", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment8.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "260", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment7.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "259", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment6.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "258", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment5.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "257", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment4.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "256", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment3.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "255", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment2.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "254", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/18-AniversarioDaAmiga/moment1.jpeg?raw=true", date: "null", category: "Aniversario da Amiga" },
-          { id: "253", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment8.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "252", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment9.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "251", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment7.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "250", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment6.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "249", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment5.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "248", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment4.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "247", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment3.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "246", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment2.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "245", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/17-DiaDeCinema/moment1.jpeg?raw=true", date: "null", category: "Dia de Cinema" },
-          { id: "244", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment8.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "243", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment9.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "242", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment7.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "241", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment6.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "240", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment5.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "239", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment4.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "238", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment3.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "237", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment2.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "236", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "235", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/16-DiaDePizza/moment1.jpeg?raw=true", date: "null", category: "Dia de Pizza" },
-          { id: "234", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment13.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "233", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment12.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "232", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment11.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "231", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment10.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "230", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment9.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "229", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment8.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "228", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment7.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "227", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment6.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "226", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment5.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "225", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment4.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "224", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment3.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "223", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment2.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "222", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/15-NaPra%C3%A7aDosNamorados/moment1.jpeg?raw=true", date: "null", category: "Na Praça dos Namorados" },
-          { id: "221", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment35.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "220", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment34.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "219", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment33.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "218", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment32.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "217", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment31.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "216", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment30.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "215", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment29.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "214", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment28.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "213", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment27.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "212", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment26.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "211", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment25.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "210", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment24.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "209", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment23.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "208", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment22.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "207", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment21.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "206", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment20.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "205", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment19.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "204", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment18.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "203", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment17.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "202", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment16.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "201", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment15.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "200", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment14.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "199", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment13.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "198", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment12.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "197", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment11.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "196", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment10.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "195", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment9.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "194", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment8.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "193", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment7.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "192", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment6.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "191", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment5.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "190", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment4.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "189", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment3.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "188", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment2.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "187", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/14-PasseioEmFamilia/moment1.jpeg?raw=true", date: "null", category: "Passeio em Familia" },
-          { id: "187", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment21.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "186", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment20.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "185", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment19.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "184", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment18.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "183", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment17.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "182", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment16.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "181", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment15.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "180", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment14.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "179", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment13.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "178", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment12.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "177", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment11.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "176", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment10.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "175", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment9.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "174", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment8.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "173", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment7.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "172", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment6.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "171", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment5.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "170", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment4.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "169", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment3.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "168", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment2.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "167", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/13-Feriadin/moment1.jpeg?raw=true", date: "null", category: "Feriadin" },
-          { id: "166", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/12-DiaDeTatooDela/moment3.jpeg?raw=true", date: "null", category: "Dia de Tatoo dela" },
-          { id: "165", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/12-DiaDeTatooDela/moment2.jpeg?raw=true", date: "null", category: "Dia de Tatoo dela" },
-          { id: "164", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/12-DiaDeTatooDela/moment1.jpeg?raw=true", date: "null", category: "Dia de Tatoo dela" },
-          { id: "163", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart2/moment8.jpeg?raw=true", date: "null", category: "Aniversario dela P2" },
-          { id: "162", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart2/moment7.jpeg?raw=true", date: "null", category: "Aniversario dela P2" },
-          { id: "161", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart2/moment6.jpeg?raw=true", date: "null", category: "Aniversario dela P2" },
-          { id: "160", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart2/moment5.jpeg?raw=true", date: "null", category: "Aniversario dela P2" },
-          { id: "159", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart2/moment4.jpeg?raw=true", date: "null", category: "Aniversario dela P2" },
-          { id: "158", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart2/moment3.jpeg?raw=true", date: "null", category: "Aniversario dela P2" },
-          { id: "157", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart2/moment2.jpeg?raw=true", date: "null", category: "Aniversario dela P2" },
-          { id: "156", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart2/moment1.jpeg?raw=true", date: "null", category: "Aniversario dela P2" },
-          { id: "155", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment38.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "154", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment37.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "153", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment36.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "152", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment35.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "151", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment34.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "150", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment33.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "149", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment32.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "148", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment31.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "147", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment30.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "146", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment29.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "145", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment28.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "144", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment27.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "143", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment26.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "142", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment25.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "141", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment24.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "140", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment23.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "139", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment22.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "138", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment21.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "137", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment20.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "136", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment19.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "135", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment18.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "134", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment17.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "133", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment16.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "132", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment15.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "131", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment14.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "130", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment13.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "129", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment12.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "128", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment11.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "127", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment10.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "126", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment9.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "125", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment8.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "124", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment7.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "123", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment6.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "122", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment5.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "121", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment4.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "120", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment3.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "119", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment2.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "118", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/11-AniversarioDelaPart1/moment1.jpeg?raw=true", date: "null", category: "Aniversario dela P1" },					
-          { id: "117", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment20.jpeg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "116", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment19.jpeg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "115", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment18.jpeg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "114", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment17.jpeg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "113", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment16.jpeg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "112", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment15.jpeg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "111", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment14.jpeg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "110", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment13.jpeg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "109", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment12.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "108", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment11.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "107", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment10.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "106", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment9.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "105", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment8.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "104", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment7.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "103", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment6.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "102", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment5.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "101", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment4.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "100", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment3.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "99", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment2.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "98", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/10-AniversarioDele/moment1.jpg?raw=true", date: "null", category: "Aniversario Dele" },
-          { id: "97", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment30.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "96", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment29.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "95", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment28.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "94", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment27.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "93", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment26.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "92", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment25.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "91", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment24.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "90", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment23.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "89", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment22.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "88", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment21.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "87", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment20.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "86", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment19.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "85", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment18.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "84", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment17.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "83", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment16.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "82", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment15.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "81", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment14.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "80", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment13.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "79", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment12.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "78", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment11.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "77", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment10.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "76", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment9.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "75", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment8.jpeg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "74", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment7.jpg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "73", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment6.jpg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "72", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment5.jpg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "71", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment4.jpg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "70", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment3.jpg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "69", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment2.jpg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "68", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/9-BateVolta/moment1.jpg?raw=true", date: "null", category: "Bate Volta" },
-          { id: "67", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/8-PedidoDeNamoro/moment8.jpeg?raw=true", date: "null", category: "Pedido de Namoro" },
-          { id: "66", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/8-PedidoDeNamoro/moment7.jpeg?raw=true", date: "null", category: "Pedido de Namoro" },
-          { id: "65", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/8-PedidoDeNamoro/moment6.jpeg?raw=true", date: "null", category: "Pedido de Namoro" },
-          { id: "64", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/8-PedidoDeNamoro/moment5.jpeg?raw=true", date: "null", category: "Pedido de Namoro" },
-          { id: "63", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/8-PedidoDeNamoro/moment4.jpeg?raw=true", date: "null", category: "Pedido de Namoro" },
-          { id: "62", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/8-PedidoDeNamoro/moment3.jpeg?raw=true", date: "null", category: "Pedido de Namoro" },
-          { id: "61", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/8-PedidoDeNamoro/moment2.jpeg?raw=true", date: "null", category: "Pedido de Namoro" },
-          { id: "60", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/8-PedidoDeNamoro/moment1.jpeg?raw=true", date: "null", category: "Pedido de Namoro" },
-          { id: "59", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment19.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "58", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment18.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "57", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment17.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "56", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment16.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "55", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment15.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "54", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment14.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "53", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment13.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "52", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment12.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "51", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment11.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "50", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment10.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "49", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment9.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "48", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment8.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "47", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment7.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "46", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment6.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "45", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment5.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "44", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment4.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "43", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment3.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "41", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment2.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "40", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/7-RoleDeSkate/moment1.jpeg?raw=true", date: "null", category: "Role de Skate" },
-          { id: "39", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment12.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "38", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment11.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "37", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment10.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "36", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment9.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "35", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment8.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "34", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment7.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "33", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment6.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "32", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment5.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "31", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment4.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "30", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment3.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "29", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment2.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "28", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/6-DiaDeArtesNoParque/moment1.jpg?raw=true", date: "null", category: "Dia de Artes no Parque" },
-          { id: "27", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment13.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "26", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment12.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "25", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment11.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "24", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment10.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "23", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment9.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "22", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment8.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "21", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment7.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "20", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment6.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "19", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment5.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "18", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment4.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "17", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment3.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "16", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment2.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "15", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/5-DateNoBrizz/moment1.jpeg?raw=true", date: "null", category: "Date no Brizz" },
-          { id: "14", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/4-DiaDeSol/moment8.jpg?raw=true", date: "null", category: "Dia de Sol" },
-          { id: "13", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/4-DiaDeSol/moment7.jpg?raw=true", date: "null", category: "Dia de Sol" },
-          { id: "12", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/4-DiaDeSol/moment5.jpg?raw=true", date: "null", category: "Dia de Sol" },
-          { id: "11", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/4-DiaDeSol/moment4.jpg?raw=true", date: "null", category: "Dia de Sol" },
-          { id: "10", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/4-DiaDeSol/moment3.jpg?raw=true", date: "null", category: "Dia de Sol" },
-          { id: "9", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/4-DiaDeSol/moment2.jpg?raw=true", date: "null", category: "Dia de Sol" },
-          { id: "8", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/4-DiaDeSol/moment1.jpg?raw=true", date: "null", category: "Dia de Sol" },
-          { id: "7", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/3-Piniquenique/moment4.jpg?raw=true", date: "null", category: "Piniquenique" },
-          { id: "6", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/3-Piniquenique/moment3.jpg?raw=true", date: "null", category: "Piniquenique" },
-          { id: "5", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/3-Piniquenique/moment2.jpg?raw=true", date: "null", category: "Piniquenique" },
-          { id: "4", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/3-Piniquenique/moment1.jpg?raw=true", date: "null", category: "Piniquenique" },
-          { id: "3", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/2-DateNoParque/moment1.jpg?raw=true", date: "null", category: "Date No Parque" },
-          { id: "2", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/1-ComoTudoComecou/moment2.jpeg?raw=true", date: "null", category: "Como tudo começou" },
-          { id: "1", url: "https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/1-ComoTudoComecou/moment1.jpeg?raw=true", date: "null", category: "Como tudo começou" },
+
+        const folders = [
+          {
+            path: "ALApp/13-Feirinha",
+            title: "",
+            category: "Feirinha",
+          },
+          {
+            path: "ALApp/RolêNaJanja",
+            title: "",
+            category: "Viagem Para Embu",
+          },
+          {
+            path: "ALApp/26-DateNaMerceariaLiberdade",
+            title: "",
+            category: "Date No Mercado Liberdade",
+          },
+          {
+            path: "ALApp/25-ViajemParaEmPiuma",
+            title: "",
+            category: "Aniversario Da Mamãe Dela",
+          },
+          {
+            path: "ALApp/24-DiaDosNamorados",
+            title: "",
+            category: "Dia Dos Namorados",
+          },
+          {
+            path: "ALApp/23-ArraiaDoBeco",
+            title: "",
+            category: "Arraia Do Becô",
+          },
+          {
+            path: "ALApp/22-ArraiaDaAline",
+            title: "",
+            category: "Arraia Da Aline",
+          },
+          {
+            path: "ALApp/21-RoleNoMotoClube",
+            title: "",
+            category: "-Role No Moto Clube",
+          },
+          {
+            path: "ALApp/20-AniversarioDaAmiga",
+            title: "",
+            category: "Aniversario Da Amiga",
+          },
+          {
+            path: "ALApp/19-DiaDoCinema",
+            title: "",
+            category: "Dia Do Cinema",
+          },
+          {
+            path: "ALApp/18-DiaDePizza",
+            title: "",
+            category: "Dia De Pizza",
+          },
+          {
+            path: "ALApp/17-NaPracaDosNamorados",
+            title: "",
+            category: "Na Praça Dos Namorados",
+          },
+          {
+            path: "ALApp/16-PasseioEmFamilia",
+            title: "",
+            category: "Passeio Em Familia",
+          },
+          {
+            path: "ALApp/15-Feriadin",
+            title: "",
+            category: "Feriadin",
+          },
+          {
+            path: "ALApp/14-AniversarioDelaPart2",
+            title: "",
+            category: "Aniversario Dela Parte 2",
+          },
+          {
+            path: "ALApp/13-AniversarioDelaPart1",
+            title: "",
+            category: "Aniversario Dela Parte 1",
+          },
+          {
+            path: "ALApp/12-AniversarioDele",
+            title: "",
+            category: "Aniversario Dele",
+          },
+          {
+            path: "ALApp/11-DiaDeArtesNoParque",
+            title: "",
+            category: "Dia De Artes No Parque",
+          },
+          {
+            path: "ALApp/10-DiaDeTatooDela",
+            title: "",
+            category: "Dia De Tatoo Dela",
+          },
+          {
+            path: "ALApp/8-BateVolta",
+            title: "",
+            category: "Bate e Volta S2 ",
+          },
+          {
+            path: "ALApp/7-PedidoDeNamoro",
+            title: "",
+            category: "Pedido De Namoro",
+          },
+          {
+            path: "ALApp/6-RoleDeSkate",
+            title: "",
+            category: "Role De Skate",
+          },
+          {
+            path: "ALApp/5-DateNoBrizz",
+            title: "",
+            category: "Date No Brizz",
+          },
+          {
+            path: "ALApp/4-DiaDeSol",
+            title: "",
+            category: "Dia De Sol",
+          },
+          {
+            path: "ALApp/3-Piniquenique",
+            title: "",
+            category: "Piquinique",
+          },
+          {
+            path: "ALApp/2-DateNoParque",
+            title: "06/01/2025",
+            category: "Date No Parque",
+          },
+          {
+            path: "ALApp/1-ComoTudoComecou",
+            title: "07/12/2024",
+            category: "Como Tudo Começou",
+          },
         ];
-        
-        setImages(mockData);
+
+        let allImages: GalleryImage[] = [];
+
+        for (const folder of folders) {
+          const response = await apiFetch(`/images/${folder.path}`);
+          const data = await response.json();
+
+          const formatted = data.map((img: any) => ({
+            id: img.id,
+            publicId: img.publicId,
+            title: folder.title,
+            category: folder.category,
+          }));
+
+          allImages = [...allImages, ...formatted];
+        }
+
+        setImages(allImages);
         setError(null);
       } catch (err) {
-        setError('Erro ao carregar as imagens');
-        console.error('Erro no carregamento:', err);
+        console.error(err);
+        setError("Erro ao carregar imagens");
       } finally {
         setLoading(false);
       }
@@ -323,23 +187,19 @@ export const useImageGallery = () => {
 
   const getImagesByCategory = () => {
     return images.reduce((acc, image) => {
-      if (!acc[image.category]) {
-        acc[image.category] = [];
-      }
+      if (!acc[image.category]) acc[image.category] = [];
       acc[image.category].push(image);
       return acc;
     }, {} as Record<string, GalleryImage[]>);
   };
 
-  const getCategories = () => {
-    return Object.keys(getImagesByCategory());
-  };
+  const getCategories = () => Object.keys(getImagesByCategory());
 
   return {
     images,
     loading,
     error,
     getImagesByCategory,
-    getCategories
+    getCategories,
   };
 };

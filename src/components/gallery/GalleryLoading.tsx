@@ -7,7 +7,7 @@ export const GalleryLoading = () => {
         <div className="text-center mb-12">
           <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-foreground mb-2">Carregando Nossa Galeria</h2>
-          <p className="text-muted-foreground">Preparando seus momentos especiais...</p>
+          <p className="text-muted-foreground">Preparando nossos momentos...</p>
         </div>
 
         <div className="space-y-16">

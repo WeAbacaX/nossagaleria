@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { Card } from "@/components/ui/card";
+import { CloudImage } from "@/components/CloudImage/CloudImage";
 
 interface GalleryCardProps {
   image: {
     id: string;
-    url: string;
+    publicId: string;
     title: string;
     category: string;
   };
@@ -12,47 +12,22 @@ interface GalleryCardProps {
 }
 
 export const GalleryCard = ({ image, onClick }: GalleryCardProps) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
   return (
-    <Card 
-      className="group cursor-pointer bg-gallery-card  hover:shadow-elegant transition-smooth hover:scale-[1.02]" //border-border overflow-hidden 
+    <Card
       onClick={onClick}
-    ><div className="polaroid">
-      <div className="aspect-square relative overflow-hidden">
-        {!imageError ? (
-          <>
-            {!imageLoaded && (
-              
-              <div className="absolute inset-0 bg-muted animate-pulse flex items-center justify-center">
-                <div className="w-8 h-8 border- border-primary border-t-transparent rounded-full animate-spin" />
-              </div>
-            )}
-            <img
-              src={image.url}
-              alt={image.title}
-              className={`w-full h-full object-cover transition-smooth group-hover:scale-105 ${
-                imageLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageError(true)}
-              loading="lazy"
-            />
-          </>
-        ) : (
-          <div className="w-full h-full bg-muted flex items-center justify-center">
-            <p className="text-muted-foreground text-sm">Erro ao carregar</p>
-          </div>
-        )}
-        </div>
-        <div className="absolute inset-0 bg-gradient-overlay opacity-0 group-hover:opacity-100 transition-smooth" />
-        
-        <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
-          {/* <p className="text-foreground font-medium opacity-0 group-hover:opacity-100 transition-smooth transform translate-y-2 group-hover:translate-y-0">
-            Nossa Galeria
-          </p> */}
-        </div>
+      className="group cursor-pointer bg-gallery-card hover:shadow-xl transition-all hover:scale-[1.03] overflow-hidden"
+    >
+      <div className="aspect-square overflow-hidden">
+        <CloudImage
+          publicId={image.publicId}
+          className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+        />
+      </div>
+
+      <div className="p-3 text-center">
+        <p className="text-sm text-foreground font-medium">
+          {image.category}
+        </p>
       </div>
     </Card>
   );

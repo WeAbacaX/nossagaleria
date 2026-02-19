@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+// import { CloudImage } from "@/components/CloudImage/CloudImage";
 
 const Login = () => {
   const [endereco, setEndereco] = useState("");
@@ -11,7 +12,6 @@ const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Usuário e senha fixos
   const FIXED_USER = "userlove";
   const FIXED_PASS = "11022025";
 
@@ -45,10 +45,15 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gallery-bg flex items-center justify-center p-4">
       <Card className="w-full max-w-md p-8 bg-gallery-card border-border shadow-elegant">
-        <img src="https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/0-Logo/LogoAL.png?raw=true" alt="logo" className="h-30 w-auto" />
-        
+
+        {/* IMAGEM DO CLOUDINARY */}
+        <div className="flex justify-center mb-6">
+        <img src="https://res.cloudinary.com/dcep22u3p/image/upload/v1771523094/imgonline-com-ua-Negative-Vl1yYMIz0tF_kbwjc5.png" alt="logo" className="h-60 w-auto" />
+        </div>
+
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-foreground">NOSSA GA+LERIA</h1>
+          <h1 className="text-2xl font-bold text-foreground">IMaGine</h1>
+          <p>Nosso Album de Momentos</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
@@ -65,7 +70,7 @@ const Login = () => {
             onChange={(e) => setSenha(e.target.value)}
           />
 
-          <Button type="submit" className="w-full bg-gradient-primary">
+          <Button type="submit" className="w-full bg-white text-black">
             Entrar
           </Button>
         </form>

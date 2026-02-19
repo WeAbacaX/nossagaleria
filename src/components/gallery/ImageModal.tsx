@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { CloudImage } from "@/components/CloudImage/CloudImage";
 
 interface Image {
   id: string;
-  url: string;
+  publicId: string;
   title: string;
   category: string;
 }
@@ -33,15 +34,15 @@ export const ImageModal = ({ isOpen, onClose, images, initialImageIndex }: Image
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') prevImage();
-    if (e.key === 'ArrowRight') nextImage();
-    if (e.key === 'Escape') onClose();
+    if (e.key === "ArrowLeft") prevImage();
+    if (e.key === "ArrowRight") nextImage();
+    if (e.key === "Escape") onClose();
   };
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
+      document.addEventListener("keydown", handleKeyDown);
+      return () => document.removeEventListener("keydown", handleKeyDown);
     }
   }, [isOpen]);
 
@@ -49,8 +50,8 @@ export const ImageModal = ({ isOpen, onClose, images, initialImageIndex }: Image
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full h-[90vh] bg-gallery-bg border-border p-0 overflow-hidden">
-        <div className="relative w-full h-full flex items-center justify-center">
+      <DialogContent className="max-w-4xl w-full h-[90vh] bg-white border-border  p-0 overflow-hidden">
+        <div className="relative w-full h-full flex items-center justify-center ">
           {/* Close Button */}
           <Button
             variant="ghost"
@@ -86,17 +87,18 @@ export const ImageModal = ({ isOpen, onClose, images, initialImageIndex }: Image
 
           {/* Main Image */}
           <div className="w-full h-full flex items-center justify-center p-8">
-            <img
-              src={images[currentIndex]?.url}
-              alt={images[currentIndex]?.title}
+            <CloudImage
+              publicId={images[currentIndex]?.publicId}
               className="max-w-full max-h-full object-contain"
             />
           </div>
 
           {/* Image Info */}
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-overlay p-6 text-center">
-            <h3 className="text-white font-medium mb-2">{images[currentIndex]?.date}</h3>
-            <p className="text-white/70 text-sm">
+            <h3 className="text-white font-medium mb-2">
+              {images[currentIndex]?.title}
+            </h3>
+            <p className="text-black/70 text-sm">
               {currentIndex + 1} de {images.length} • {images[currentIndex]?.category}
             </p>
           </div>
@@ -108,15 +110,16 @@ export const ImageModal = ({ isOpen, onClose, images, initialImageIndex }: Image
                 <button
                   key={image.id}
                   onClick={() => setCurrentIndex(index)}
-                  className={`flex-shrink-0 w-12 h-12 rounded border-2 overflow-hidden transition-smooth ${
-                    index === currentIndex ? 'border-primary' : 'border-transparent opacity-50'
-                  }`}
+                  // className={`flex-shrink-0 w-12 h-12 rounded border-2 overflow-hidden ${
+//Thumb hidden    //   index === currentIndex
+                  //     ? "border-primary"
+                  //     : "border-transparent opacity-50"
+                  // }`}
                 >
-                  <img
-                    src={image.url}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
+                {/* <CloudImage
+//image hidden    publicId={images[currentIndex]?.publicId}
+                  className="max-w-full max-h-full object-contain"
+                /> */}
                 </button>
               ))}
             </div>

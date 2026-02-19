@@ -7,6 +7,7 @@ import { GalleryError } from "@/components/gallery/GalleryError";
 import { useImageGallery } from "@/hooks/useImageGallery";
 import { GalleryFooter } from "@/components/gallery/GalleryFooter";
 
+
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -81,9 +82,10 @@ const Gallery = () => {
                 }}
                 className="space-y-6"
               >
-                <h2 className="text-2xl font-bold text-foreground text-center">
+                {/* Titulo */}
+                {/* <h2 className="text-2xl font-bold text-foreground text-center">
                   {category}
-                </h2>
+                </h2> */}
 
                 {/* Mostra apenas uma imagem por categoria */}
                 <div className="flex justify-center">

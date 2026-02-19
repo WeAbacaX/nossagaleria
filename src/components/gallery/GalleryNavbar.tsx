@@ -43,8 +43,10 @@ export const GalleryNavbar = ({ categories, onCategoryClick }: GalleryNavbarProp
       {/* Mobile Navbar */}
       <nav className="md:hidden fixed top-0 left-0 right-0 z-40 bg-gallery-nav/95 backdrop-blur-sm border-b border-border">
         <div className="flex items-center justify-between px-4 py-4">
-          <img src="https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/0-Logo/LogoAL.png?raw=true" alt="logo" className="h-11 w-auto" />
-
+          <div ><img src="https://res.cloudinary.com/dcep22u3p/image/upload/v1771523094/imgonline-com-ua-Negative-Vl1yYMIz0tF_kbwjc5.png" alt="logo" className="h-11 w-auto" />
+          
+          </div>
+          <div>
           <Button
             variant="ghost"
             size="icon"
@@ -53,6 +55,7 @@ export const GalleryNavbar = ({ categories, onCategoryClick }: GalleryNavbarProp
           >
             {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </Button>
+          </div>
         </div>
       </nav>
 

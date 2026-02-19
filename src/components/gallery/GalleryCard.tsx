@@ -15,7 +15,7 @@ export const GalleryCard = ({ image, onClick }: GalleryCardProps) => {
   return (
     <Card
       onClick={onClick}
-      className="group cursor-pointer bg-gallery-card hover:shadow-xl transition-all hover:scale-[1.03] overflow-hidden"
+      className="group cursor-pointer bg-gallery-card hover:shadow-xl transition-all hover:scale-[1.03] overflow-hidden" //bg-gallery-card
     >
       <div className="aspect-square overflow-hidden">
         <CloudImage
@@ -25,7 +25,8 @@ export const GalleryCard = ({ image, onClick }: GalleryCardProps) => {
       </div>
 
       <div className="p-3 text-center">
-        <p className="text-sm text-foreground font-medium">
+        <p className="text-sm text-foreground  text-white
+          font-medium font-mono">
           {image.category}
         </p>
       </div>

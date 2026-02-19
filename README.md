@@ -1,2 +1,2 @@
 # Welcome to IMaGine project
-Link: https://weabacax.github.io/nossagaleria/
+Link: https://weabacax.github.io/IMaGine/

@@ -16,7 +16,7 @@ export const GalleryFooter = () => {
           <p>De: Ale</p>
           <p>Para: Luh</p>
         </div>
-        <img src="https://github.com/WeAbacaX/IMaGine/blob/main/A+L%20App/0-Logo/LogoAL.png?raw=true" alt="logo" className="h-11 w-auto" />
+        <img src="https://res.cloudinary.com/dcep22u3p/image/upload/v1770313187/LogoAL_ca34d0.png" alt="logo Footer" className="h-11 w-auto" />
       </div>
     </div>
   );

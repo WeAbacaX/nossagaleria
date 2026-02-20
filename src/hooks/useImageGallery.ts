@@ -137,7 +137,7 @@ export const useImageGallery = () => {
           {
             path: "ALApp/21-RoleNoMotoClube",
             title: "31/05/2025",
-            category: "-Role No Moto Clube",
+            category: "Role No Moto Clube",
           },
           {
             path: "ALApp/20-AniversarioDaAmiga",

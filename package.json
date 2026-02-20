@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "deploy": "gh-pages -d docs"
   },
-  "homepage": "https://weabacax.github.io/nossagaleria",
+  "homepage": "https://github.com/WeAbacaX/IMaGine",
   "dependencies": {
     "@cloudinary/react": "^1.14.3",
     "@cloudinary/url-gen": "^1.22.0",

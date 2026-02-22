@@ -48,7 +48,7 @@ const Login = () => {
 
         {/* IMAGEM DO CLOUDINARY */}
         <div className="flex justify-center mb-6">
-        <img src="https://res.cloudinary.com/dcep22u3p/image/upload/v1771523094/imgonline-com-ua-Negative-Vl1yYMIz0tF_kbwjc5.png" alt="logo" className="h-60 w-auto" />
+        <img src="https://res.cloudinary.com/dcep22u3p/image/upload/v1770313187/LogoAL_ca34d0.png" alt="logo" className="h-60 w-auto" />
         </div>
 
         <div className="text-center mb-8">

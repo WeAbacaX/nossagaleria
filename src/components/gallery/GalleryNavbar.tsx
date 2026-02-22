@@ -22,7 +22,7 @@ export const GalleryNavbar = ({ categories, onCategoryClick }: GalleryNavbarProp
       <nav className="hidden md:block fixed top-0 left-0 right-0 z-40 bg-gallery-nav/95 backdrop-blur-sm border-b border-border">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-          <img src="public/LogoAL.png" alt="logo" className="h-11 w-auto" />
+          <img src="https://res.cloudinary.com/dcep22u3p/image/upload/v1770313187/LogoAL_ca34d0.png" alt="logo" className="h-11 w-auto" />
             <h1 className="text-xl font-bold text-foreground">NOSSA GA+LERIA </h1>
             <div className="flex space-x-2 max-w-2xl overflow-x-auto">
               {categories.map((category) => (

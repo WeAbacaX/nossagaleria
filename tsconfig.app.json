@@ -26,5 +26,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "docs/back"]
+  "include": ["src", "old_docs/back"]
 }
